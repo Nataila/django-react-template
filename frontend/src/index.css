@@ -1,0 +1,24 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#root, .root {
+  width: 100%;
+  height: 100%;
+}
+
+.login-root {
+  padding-top: 100px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.login-form {
+  width: 500px;
+}
+.signup-root {
+  display: flex;
+  justify-content: center;
+}
