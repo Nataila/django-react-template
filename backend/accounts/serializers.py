@@ -4,7 +4,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import Users
 
-logger = logging.getLogger('django')
+logger = logging.getLogger('log')
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -42,8 +42,22 @@ class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
         fields = ('username', 'password', 'password2',)
+        extra_kwargs = {
+            'username': {
+                'error_messages': {
+                    'blank': '用户名不能为空',
+                    'invalid': '输入的用户名无效',
+                }
+            },
+            'password': {
+                'error_messages': {
+                    'blank': '密码不能为空',
+                }
+            }
+        }
 
     def validate(self, data):
+        logger.error('valid 校验密码')
         if data['password'] != data['password2']:
             raise serializers.ValidationError('两次输入的密码不一致')
         return data
@@ -51,8 +65,5 @@ class CreateUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop('password2')
         user = Users.objects.create_user(**validated_data)
-        print(11111111)
-        logger.debug(f'用户 {user.username} 创建成功')
-        print(11111111)
         return user
 
