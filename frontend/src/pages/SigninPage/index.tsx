@@ -1,6 +1,6 @@
 import { Button, Form, FormProps, Input, Space, message } from "antd";
-import request from '../../request';
 import { Link, useNavigate } from "react-router-dom";
+import request from "../../request";
 
 type FieldType = {
     username?: string;
@@ -11,17 +11,13 @@ type FieldType = {
 const SigninPage = () => {
   const navigate = useNavigate()
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    const res = await request.post('/token/', values)
-    if ([200, 201].includes(res.status)) {
-        localStorage.setItem('token', res.data.access)
-        localStorage.setItem('role', res.data.role)
-        localStorage.setItem('username', res.data.username)
-        localStorage.setItem('nickname', res.data.nickname)
-        message.success('登录成功')
-        navigate('/')
-    } else {
-        message.error('登录失败，请检查用户名密码是否正确')
-    }
+    const res = await request.post('/login/', values)
+    localStorage.setItem('token', res.access)
+    localStorage.setItem('role', res.role)
+    localStorage.setItem('username', res.username)
+    localStorage.setItem('nickname', res.nickname)
+    message.success('登录成功')
+    navigate('/')
   };
   
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
@@ -45,7 +41,7 @@ const SigninPage = () => {
       <Form.Item<FieldType>
         label="用户名"
         name="username"
-        rules={[{ required: true, message: 'Please input your username!' }]}
+        rules={[{ required: true, message: '请输入用户名' }]}
       >
         <Input />
       </Form.Item>
@@ -53,7 +49,7 @@ const SigninPage = () => {
       <Form.Item<FieldType>
         label="密码"
         name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        rules={[{ required: true, message: '请输入密码' }]}
       >
         <Input.Password />
       </Form.Item>

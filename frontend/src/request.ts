@@ -1,4 +1,6 @@
+import { message } from 'antd';
 import Axios from 'axios'
+import _ from 'lodash'
 
 const request = Axios.create({
     baseURL: 'http://127.0.0.1:8001/api/accounts/',
@@ -20,5 +22,21 @@ request.interceptors.request.use(
       return Promise.reject(error);
     }
   );
+
+  request.interceptors.response.use(
+    (response)=>{
+      //响应数据后做点什么
+      if (response.status && [200, 201].includes(response.status)) {
+        return response.data;
+      }
+    },
+    (error)=>{
+      // 对响应错误做点什么
+      _.flattenDeep(Object.values(error.response.data)).forEach(item => {
+        return message.error(item);
+      })
+      return Promise.reject(error);
+    }
+  )
 
   export default request
