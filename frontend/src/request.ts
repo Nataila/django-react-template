@@ -3,7 +3,7 @@ import Axios from 'axios'
 import _ from 'lodash'
 
 const request = Axios.create({
-    baseURL: 'http://127.0.0.1:8001/api/accounts/',
+    baseURL: 'http://127.0.0.1:8001/api',
     timeout: 2000,
 });
 

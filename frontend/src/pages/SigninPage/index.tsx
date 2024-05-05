@@ -1,6 +1,6 @@
 import { Button, Form, FormProps, Input, Space, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import request from "../../request";
+import { LoginReq } from "../../services/accounts";
 
 type FieldType = {
     username?: string;
@@ -11,7 +11,7 @@ type FieldType = {
 const SigninPage = () => {
   const navigate = useNavigate()
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    const res = await request.post('/login/', values)
+    const res = await LoginReq(values)
     localStorage.setItem('token', res.access)
     localStorage.setItem('role', res.role)
     localStorage.setItem('username', res.username)
