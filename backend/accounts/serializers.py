@@ -6,6 +6,7 @@ from .models import Users
 
 logger = logging.getLogger('log')
 
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -17,14 +18,16 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
 
         # 添加额外的返回信息
-        data.update({
-            'uid': self.user.id,
-            'username': self.user.username,
-            'email': self.user.email,
-            'role': self.user.role,
-            'name': self.user.name,
-            # 可以继续添加更多你需要的用户信息
-        })
+        data.update(
+            {
+                'uid': self.user.id,
+                'username': self.user.username,
+                'email': self.user.email,
+                'role': self.user.role,
+                'name': self.user.name,
+                # 可以继续添加更多你需要的用户信息
+            }
+        )
 
         return data
 
@@ -32,7 +35,22 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = ('username', 'email', 'role', 'name', 'id',)
+        fields = (
+            'username',
+            'email',
+            'role',
+            'name',
+            'id',
+        )
+
+
+class UserWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Users
+        fields = (
+            'email',
+            'name',
+        )
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
@@ -41,7 +59,11 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Users
-        fields = ('username', 'password', 'password2',)
+        fields = (
+            'username',
+            'password',
+            'password2',
+        )
         extra_kwargs = {
             'username': {
                 'error_messages': {
@@ -53,7 +75,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
                 'error_messages': {
                     'blank': '密码不能为空',
                 }
-            }
+            },
         }
 
     def validate(self, data):
@@ -66,4 +88,3 @@ class CreateUserSerializer(serializers.ModelSerializer):
         validated_data.pop('password2')
         user = Users.objects.create_user(**validated_data)
         return user
-

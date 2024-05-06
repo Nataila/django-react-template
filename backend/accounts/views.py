@@ -6,7 +6,12 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 import const
-from .serializers import MyTokenObtainPairSerializer, CreateUserSerializer, UsersSerializer
+from .serializers import (
+    MyTokenObtainPairSerializer,
+    CreateUserSerializer,
+    UsersSerializer,
+    UserWriteSerializer,
+)
 from .models import Users
 
 
@@ -25,3 +30,12 @@ class UserListView(generics.ListAPIView):
     serializer_class = UsersSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
+
+class UserDetailView(generics.RetrieveUpdateAPIView):
+    queryset = Users.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return UsersSerializer
+        return UserWriteSerializer

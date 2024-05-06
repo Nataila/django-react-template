@@ -103,7 +103,6 @@ DATABASES = {
 }
 
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -150,21 +149,21 @@ LOGGING = {
         # 日志格式
         'standard': {
             'format': '[%(asctime)s] [%(filename)s:%(lineno)d] [%(module)s:%(funcName)s] '
-                      '[%(levelname)s]- %(message)s'},
-        'simple': {  # 简单格式
-            'format': '%(levelname)s %(message)s'
+            '[%(levelname)s]- %(message)s'
         },
+        'simple': {'format': '%(levelname)s %(message)s'},  # 简单格式
     },
     # 过滤
-    'filters': {
-    },
+    'filters': {},
     # 定义具体处理日志的方式
     'handlers': {
         # 默认记录所有日志
         'default': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(log_path, 'django.log'.format(time.strftime('%Y-%m'))),
+            'filename': os.path.join(
+                log_path, 'django.log'.format(time.strftime('%Y-%m'))
+            ),
             'maxBytes': 1024 * 1024 * 5,  # 文件大小
             'backupCount': 5,  # 备份数
             'formatter': 'standard',  # 输出格式
@@ -174,7 +173,9 @@ LOGGING = {
         'error': {
             'level': 'ERROR',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(log_path, 'error-{}.log'.format(time.strftime('%Y-%m-%d'))),
+            'filename': os.path.join(
+                log_path, 'error-{}.log'.format(time.strftime('%Y-%m-%d'))
+            ),
             'maxBytes': 1024 * 1024 * 5,  # 文件大小
             'backupCount': 5,  # 备份数
             'formatter': 'standard',  # 输出格式
@@ -184,13 +185,15 @@ LOGGING = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'standard'
+            'formatter': 'standard',
         },
         # 输出info日志
         'info': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(log_path, 'info-{}.log'.format(time.strftime('%Y-%m-%d'))),
+            'filename': os.path.join(
+                log_path, 'info-{}.log'.format(time.strftime('%Y-%m-%d'))
+            ),
             'maxBytes': 1024 * 1024 * 5,
             'backupCount': 5,
             'formatter': 'standard',
@@ -203,15 +206,15 @@ LOGGING = {
         'django': {
             'handlers': ['default', 'console'],
             'level': 'INFO',
-            'propagate': False
+            'propagate': False,
         },
         # log 调用时需要当作参数传入
         'log': {
             'handlers': ['error', 'info', 'console', 'default'],
             'level': 'INFO',
-            'propagate': True
+            'propagate': True,
         },
-    }
+    },
 }
 
 
@@ -234,7 +237,6 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=250),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
-
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': 'jsidfjk2l34',
     'VERIFYING_KEY': None,
@@ -254,14 +256,12 @@ SIMPLE_JWT = {
 
 
 SWAGGER_SETTINGS = {
-   'SECURITY_DEFINITIONS': {
-      'Basic': {
-        'type': 'basic'
-      },
-      'Bearer': {
-        'type': 'apiKey',
-        'name': 'Authorization',
-        'in': 'header',
-      }
-   }
+    'SECURITY_DEFINITIONS': {
+        'Basic': {'type': 'basic'},
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+        },
+    }
 }
