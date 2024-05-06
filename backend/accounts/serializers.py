@@ -48,7 +48,6 @@ class UserWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
         fields = (
-            'email',
             'name',
         )
 
