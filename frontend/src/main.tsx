@@ -5,6 +5,7 @@ import MainPage from './pages/MainPage';
 import SignupPage from './pages/SignupPage';
 import SigninPage from './pages/SigninPage';
 import ProfilePage from './pages/ProfilePage';
+import RestPwdPage from './pages/RestPwdPage';
 
 
 const PrivateRouter = ({children}) => {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <ProfilePage />,
+      },
+      {
+        path: "resetpwd",
+        element: <RestPwdPage />,
       },
     ],
   },

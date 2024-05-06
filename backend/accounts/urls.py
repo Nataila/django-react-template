@@ -4,11 +4,12 @@
 # @Date  :2024-04-23
 
 from django.urls import path
-from .views import CreateUserView, MyTokenObtainPairView, UserListView, UserDetailView
+from .views import CreateUserView, MyTokenObtainPairView, UserListView, UserDetailView, ResetPasswordAPIView
 from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
     path('users/', UserListView.as_view(), name='user-list'),
+    path('resetpwd/', ResetPasswordAPIView.as_view(), name='reset-pwd'),
     path('user/', UserDetailView.as_view(), name='current-user-detail'),
     path('user/<str:pk>/', UserDetailView.as_view(), name='user-detail'),
     path('register/', CreateUserView.as_view(), name='register'),

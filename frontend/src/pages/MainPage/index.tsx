@@ -34,6 +34,10 @@ const MainPage = () => {
         {
           key: 'profile',
           label: <Link to='profile'>个人设置</Link> ,
+        },
+        {
+          key: 'resetpwd',
+          label: <Link to='resetpwd'>修改密码</Link> ,
         }
       ]
     }
@@ -46,7 +50,7 @@ const MainPage = () => {
     },
     {
       key: 'logout',
-      label: '退出',
+      label: <span onClick={logout}> 退出</span>,
     },
   ];
 
